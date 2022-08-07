@@ -3,6 +3,7 @@ package com.exchange.exchangerate.Controller;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,16 @@ import com.exchange.exchangerate.Service.ExchangeService;
 public class CurrencyController {
 
     @Autowired
-    ExchangeService service;
+    private ExchangeService service;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @GetMapping
     public String returnIndexPage(Model model){
         service.getCurrency();
         model.addAttribute("currency", Currency.currencyCodeAndValue);
+        redisTemplate.opsForValue().set("example1", "examplezz");
         return "index";
     }
 

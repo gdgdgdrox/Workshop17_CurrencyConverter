@@ -24,11 +24,12 @@ public class ExchangeService {
     private String currencyURL;
     @Value("${baseURL}")
     private String baseURL;
-    @Value("${apikey}")
-    private String apiKey;
+    
+    private final String API_KEY = System.getenv("CURRENCY_API_KEY");
 
     @Autowired
     private RestTemplate restTemplate;
+
 
     public void getCurrency(){
         ResponseEntity<String> response = restTemplate.getForEntity(currencyURL, String.class);
@@ -49,10 +50,9 @@ public class ExchangeService {
         queryParam("from", from).
         queryParam("amount", amount).
         toUriString();
-        System.out.println(fullURL);
 
         RequestEntity<Void> reqEntity = 
-                    RequestEntity.get(fullURL).header("apikey", apiKey).build();
+                    RequestEntity.get(fullURL).header("apikey", API_KEY).build();
 
         ResponseEntity<ExchangeRate> respEntity = 
                     restTemplate.exchange(reqEntity, ExchangeRate.class);

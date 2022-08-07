@@ -7,6 +7,10 @@
 7. Use WebClient instead of RestTemplate -->
 
 ''''''''''''''''
+
+
+
+''''''''''''''''
 API URL
     Request request = new Request.Builder()
       .url("https://api.apilayer.com/currency_data/convert?to={to}&from={from}&amount={amount}")
