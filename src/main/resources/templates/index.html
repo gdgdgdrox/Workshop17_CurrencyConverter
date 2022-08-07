@@ -13,6 +13,7 @@
         th:action="@{/result}"
         method="get"
         >
+        <p>ADDITIONAL STUFF . WILL IT APPEAR?</p>
         <label for="from">From:</label>
         <select id="from" name="from">
             <option th:each="currency : ${currency}" th:value="${currency.key}">
