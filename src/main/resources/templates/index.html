@@ -11,24 +11,25 @@
     <form
         action="#"
         th:action="@{/result}"
-        method="get"
+        method="post"
+        th:object="${queryObject}"
         >
         <label for="from">From:</label>
         <select id="from" name="from">
-            <option th:each="currency : ${currency}" th:value="${currency.key}">
+            <option th:each="currency : ${currency}" th:field="*{from}" th:value="${currency.key}">
                 <span th:text="${currency.value}"></span>
             </option>
         </select>
         <br>
         <label for="to">To:</label>
         <select id="to" name="to">
-            <option th:each="currency : ${currency}" th:value="${currency.key}">
+            <option th:each="currency : ${currency}" th:field="*{to}" th:value="${currency.key}">
                 <span th:text="${currency.value}"></span>
             </option>
         </select>
         <br>
         <label for="amount">Amount:</label>
-        <input type="number" name="amount" id="amount" min="0" step="any">
+        <input type="number" name="amount" th:field="*{amount}" id="amount" min="0" step="any">
         <br>
         <input type="submit" value="convert">
     </form>

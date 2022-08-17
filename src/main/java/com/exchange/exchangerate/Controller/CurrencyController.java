@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.exchange.exchangerate.Model.Currency;
 import com.exchange.exchangerate.Model.ExchangeRate;
+import com.exchange.exchangerate.Model.Query;
 import com.exchange.exchangerate.Service.ExchangeService;
 
 @Controller
@@ -29,14 +32,16 @@ public class CurrencyController {
     @GetMapping
     public String returnIndexPage(Model model){
         model.addAttribute("currency", Currency.currencyCodeAndValue);
+        model.addAttribute("queryObject", new Query());
         return "index";
     }
 
-    @GetMapping("/result")
-    public String returnResultPage(@RequestParam String to, 
-                                    @RequestParam String from, 
-                                    @RequestParam BigDecimal amount,
+    @PostMapping("/result")
+    public String returnResultPage(@ModelAttribute Query queryObject,
                                     Model model){
+        String to = queryObject.getTo();
+        String from = queryObject.getFrom();
+        BigDecimal amount = queryObject.getAmount();
         ExchangeRate exchangeRate = service.getResult(to, from, amount);
         model.addAttribute("exchangeRate", exchangeRate);
         return "resultPage";
